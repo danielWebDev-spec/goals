@@ -6,7 +6,7 @@ const registerUser = (req, res) => {
 };
 
 // @desc login user data
-// @route POST /api/users
+// @route POST /api/users/login
 // @access Public
 const loginUser = (req, res) => {
   res.status(200).json({ msg: "Login User" });
