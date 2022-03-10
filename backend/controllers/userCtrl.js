@@ -9,7 +9,7 @@ const asyncHandler = require("express-async-handler");
 const registerUser = asyncHandler(async (req, res) => {
   // validation
   const { name, email, password } = req.body;
-
+  // check if all fields have been entered
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("Please add all fields");
@@ -40,6 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -56,11 +57,13 @@ const loginUser = asyncHandler(async (req, res) => {
   // check user email
   const user = await User.findOne({ email });
 
+  // compare user password to hashed password
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       _id: user.id,
       name: user.name,
       email: user.email,
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -74,5 +77,13 @@ const loginUser = asyncHandler(async (req, res) => {
 const getMe = asyncHandler(async (req, res) => {
   res.status(200).json({ msg: "Get user data" });
 });
+
+// --------------------------------------------------
+// generate jwt
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 module.exports = { registerUser, loginUser, getMe };
