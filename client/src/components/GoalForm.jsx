@@ -25,6 +25,7 @@ function GoalForm() {
             id="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
+            placeholder="Enter a goal"
           />
         </div>
         <div className="form-group">
