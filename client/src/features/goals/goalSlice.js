@@ -8,6 +8,9 @@ const initialState = {
   message: "",
 };
 
+// createGoal
+export const createGoal = () => {};
+
 export const goalSlice = createSlice({
   name: "goal",
   initialState,
