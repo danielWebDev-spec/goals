@@ -50,6 +50,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    // persist
     reset: (state) => {
       state.isLoading = false;
       state.isSuccess = false;
